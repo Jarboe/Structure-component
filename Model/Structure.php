@@ -12,11 +12,11 @@ class Structure extends \Baum\Node
     protected $table = 'structure';
     protected $parentColumn = 'parent_id';
 
-    protected $_nodeUrl = null;
+    protected $nodeUrl = null;
     
     public static function flushCache()
     {
-        Cache::tags('j_tree')->flush();
+        Cache::tags('tree-'. mb_strtolower(static::class))->flush();
     } // end flushCache
     
     public function setSlugAttribute($value)
@@ -59,15 +59,15 @@ class Structure extends \Baum\Node
 
     public function setUrl($url)
     {
-        $this->_nodeUrl = $url;
+        $this->nodeUrl = $url;
     } // end setUrl
 
     public function getUrl()
     {
-        if (is_null($this->_nodeUrl)) {
-            $this->_nodeUrl = $this->getGeneratedUrl();
+        if (is_null($this->nodeUrl)) {
+            $this->nodeUrl = $this->getGeneratedUrl();
         }
-        return $this->_nodeUrl;
+        return $this->nodeUrl;
     } // end getUrl
 
     public function isActive($setIdent = false)

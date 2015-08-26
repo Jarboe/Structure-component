@@ -10,6 +10,11 @@ use Cache;
 class Util extends \Yaro\Jarboe\Component\AbstractUtil
 {
     
+    public static function install($command)
+    {
+        self::copyIfNotExist($command, 'resources/definitions/tree/node.php', __DIR__);
+    } // end install
+    
     public static function getNavigationMenuItem() 
     {
         return array(
@@ -33,7 +38,7 @@ class Util extends \Yaro\Jarboe\Component\AbstractUtil
         return $errors;
     } // end check
 
-    private static function recurseTree($tree, $node, &$slugs = array())
+    private static function recurseTree(&$current, $tree, $node, &$slugs = array())
     {
         if (!$node['parent_id']) {
             return $node['slug'];
@@ -43,7 +48,8 @@ class Util extends \Yaro\Jarboe\Component\AbstractUtil
         $idParent = $node['parent_id'];
         if ($idParent) {
             $parent = $tree[$idParent];
-            self::recurseTree($tree, $parent, $slugs);
+            $current->addBreadcrumb($parent);
+            self::recurseTree($current, $tree, $parent, $slugs);
         }
     
         return implode('/', array_reverse($slugs));
@@ -96,7 +102,7 @@ class Util extends \Yaro\Jarboe\Component\AbstractUtil
             $clone = array_combine(array_column($clone, 'id'), $clone);
         
             foreach ($tree as $node) {
-                $nodeUrl = self::recurseTree($clone, $node);
+                $nodeUrl = self::recurseTree($node, $clone, $node);
                 $node->setUrl($nodeUrl);
                 
                 self::registerSingleRoute($nodeUrl, $node);

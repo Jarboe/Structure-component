@@ -13,11 +13,18 @@ class Structure extends \Baum\Node
     protected $parentColumn = 'parent_id';
 
     protected $nodeUrl = null;
+    protected $breadcrumbs = array();
+    
     
     public static function flushCache()
     {
         Cache::tags('tree-'. mb_strtolower(static::class))->flush();
     } // end flushCache
+    
+    public function addBreadcrumb($node)
+    {
+        $this->breadcrumbs[] = $node;
+    } // end addBreadcrumb
     
     public function setSlugAttribute($value)
     {

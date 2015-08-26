@@ -39,6 +39,15 @@ return array(
                 return true;
             },
         ),
+        'breadcrumbs' => array(
+            'type' => 'node', 
+            'action' => 'App\Http\Controllers\SomeController@breadcrumbs',
+            'definition' => 'node', 
+            'node_definition' => 'node',
+            'check' => function() {
+                return true;
+            },
+        ),
     ),
     
     'default' => array(

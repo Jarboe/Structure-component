@@ -4,6 +4,10 @@ return array(
     
     'model' => '\Jarboe\Component\Structure\Model\Structure',
     
+    'permissions' => array(
+        'create' => false,
+    ),
+    
      // !isset options - tinyint(1)
      // isset options  - set
     'node_active_field' => array(
@@ -57,6 +61,5 @@ return array(
         'node_definition' => 'node',
     ),
     
-    
-    
 );
+

@@ -15,7 +15,7 @@ class TreeController extends \App\Http\Controllers\Controller
     {
         // FIXME: move paramter to config
         if (!$node->isActive(App::getLocale()) && !Input::has('show')) {
-            App::abort(404);
+            abort(404);
         }
 
         $this->node = $node;

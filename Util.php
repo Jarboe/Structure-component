@@ -62,7 +62,7 @@ class Util extends \Yaro\Jarboe\Component\AbstractUtil
             $templates = config('jarboe.c.structure.templates');
             if (!isset($templates[$node->template])) {
                 // just to be gentle with web crawlers
-                App::abort(404);
+                abort(404);
             }
             list($controller, $method) = explode('@', $templates[$node->template]['action']);
             $controller = '\\'. ltrim($controller, '\\');

@@ -36,10 +36,8 @@ class Structure extends \Baum\Node
                       ->whereRaw("slug REGEXP '^{$slug}(-[0-9]*)?$'")
                       ->lists('slug');
 
-        $slugCount = '';
-        if ($slugs->count()) {
-            $slugCount = 0;
-            
+        $slugCount = 0;
+        if (array_search($slug, $slugs->toArray()) !== false) {
             foreach ($slugs as $existedSlug) {
                 if (preg_match('~(\d+)$~', $existedSlug, $matches)) {
                     $slugCount = $slugCount > $matches[1] ? $slugCount : $matches[1];
